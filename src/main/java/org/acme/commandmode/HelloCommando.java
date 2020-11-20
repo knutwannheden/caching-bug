@@ -1,9 +1,6 @@
 package org.acme.commandmode;
 
-import javax.enterprise.context.control.ActivateRequestContext;
-import javax.inject.Inject;
-
-import io.quarkus.runtime.Quarkus;
+import io.quarkus.cache.CacheResult;
 import io.quarkus.runtime.QuarkusApplication;
 import io.quarkus.runtime.annotations.QuarkusMain;
 
@@ -16,4 +13,12 @@ public class HelloCommando implements QuarkusApplication {
         System.out.println("hello " + name);
         return 0;
     }
+
+    @CacheResult(cacheName = "foo")
+    public String foo(int i) {
+        if (i % 2 == 0)
+            return Integer.toString(i);
+        throw new IllegalArgumentException("odd");
+    }
+
 }
